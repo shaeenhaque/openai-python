@@ -535,8 +535,8 @@ class BaseClient(Generic[_HttpxClientT, _DefaultStreamT]):
         if is_body_allowed:
             if isinstance(json_data, bytes):
                 kwargs["content"] = json_data
-            else:
-                kwargs["json"] = json_data if is_given(json_data) else None
+            elif is_given(json_data) and json_data is not None:
+                kwargs["json"] = json_data
             kwargs["files"] = files
         else:
             headers.pop("Content-Type", None)
